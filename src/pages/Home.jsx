@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import TypingText from "../components/TypingText";
-import "./Home.css"; // CSS separado
+import "./Home.css"; 
 
 const Home = () => {
   const [showSecondLine, setShowSecondLine] = useState(false);

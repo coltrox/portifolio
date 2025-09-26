@@ -1,0 +1,145 @@
+/* src/pages/Projetos.module.css */
+
+.page {
+  width: 100%;
+  min-height: 100vh;
+  padding: 4rem 2rem;
+  box-sizing: border-box;
+}
+
+.mainContent {
+  max-width: 1200px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.heading {
+  font-family: 'Poppins', sans-serif;
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
+  color: #94a3b8;
+  margin-bottom: 4rem;
+}
+
+/* A grade de projetos */
+.grid {
+  display: grid;
+  /* AJUSTADO: Tamanho mínimo reduzido para os cards ficarem mais estreitos */
+  grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+  /* AJUSTADO: Espaçamento entre os cards reduzido */
+  gap: 1.5rem;
+  text-align: left;
+}
+
+/* O card de cada projeto */
+.projectCard {
+  background-color: #1e293b;
+  border: 1px solid #334155;
+  border-radius: 8px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.projectCard:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+}
+
+.projectImage {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  display: block;
+}
+
+.projectInfo {
+  /* AJUSTADO: Padding interno reduzido */
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+
+.projectTitle {
+  font-family: 'Poppins', sans-serif;
+  /* AJUSTADO: Fonte do título do card reduzida */
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: #ffffff;
+  margin: 0 0 0.75rem 0;
+}
+
+.projectDescription {
+  font-family: 'Inter', sans-serif;
+  color: #cbd5e1;
+  line-height: 1.6;
+  /* AJUSTADO: Fonte da descrição reduzida */
+  font-size: 0.9rem;
+  /* AJUSTADO: Margem inferior reduzida */
+  margin-bottom: 1.25rem;
+  flex-grow: 1;
+}
+
+.projectTech {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+  /* AJUSTADO: Margem inferior reduzida */
+  margin-bottom: 1.25rem;
+}
+
+.techTag {
+  background-color: #334155;
+  color: #e2e8f0;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  /* AJUSTADO: Fonte das tags reduzida */
+  font-size: 0.75rem;
+  font-weight: 500;
+}
+
+.projectLinks {
+  display: flex;
+  gap: 1rem;
+  margin-top: auto;
+}
+
+.link {
+  font-family: 'Inter', sans-serif;
+  font-weight: 500;
+  color: #ffffff;
+  text-decoration: none;
+  background-color: #3b82f6;
+  /* AJUSTADO: Padding do botão reduzido */
+  padding: 0.4rem 0.8rem;
+  border-radius: 6px;
+  /* AJUSTADO: Fonte do botão reduzida */
+  font-size: 0.875rem;
+  transition: background-color 0.2s ease;
+}
+
+.link:hover {
+  background-color: #2563eb;
+}
+
+.backLink {
+  display: inline-block;
+  margin-top: 4rem;
+  color: #94a3b8;
+  text-decoration: none;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.backLink:hover {
+  color: #ffffff;
+}

@@ -1,17 +1,24 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Home from "./pages/Home";
-import Sobre from "./pages/Sobre";
-import Projetos from "./pages/Projetos";
+// App.js (ou seu arquivo principal de rotas)
+
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Hero from "./components/Hero"; // Página inicial
+import Projetos from "./pages/Projetos"; // Página de projetos
+import Sobre from "./pages/Sobre"; // Página Sobre
 
 function App() {
   return (
-    <Router>
+    <BrowserRouter>
       <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/sobre" element={<Sobre />} />
+        {/* Rota para a página inicial */}
+        <Route path="/" element={<Hero />} />
+
+        {/* Rota para a página de projetos */}
         <Route path="/projetos" element={<Projetos />} />
+
+        {/* Rota para a página sobre mim */}
+        <Route path="/sobre" element={<Sobre />} />
       </Routes>
-    </Router>
+    </BrowserRouter>
   );
 }
 

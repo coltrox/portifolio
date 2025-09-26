@@ -1,23 +1,42 @@
-import { useEffect, useState } from "react";
+import { useState, useEffect } from 'react';
 
-const TypingText = ({ text, speed = 50, onComplete }) => {
-  const [displayedText, setDisplayedText] = useState("");
+export default function TypingText({
+  text = "",
+  speed = 80,
+  className = "",
+  onComplete,
+}) {
+  const [displayedText, setDisplayedText] = useState('');
 
   useEffect(() => {
-    let i = 0;
-    const interval = setInterval(() => {
-      setDisplayedText((prev) => prev + text[i]);
-      i++;
-      if (i >= text.length) {
-        clearInterval(interval);
-        if (onComplete) onComplete();
-      }
+    // Garante que o texto reinicie se a prop 'text' mudar.
+    setDisplayedText('');
+
+    const intervalId = setInterval(() => {
+      // Usamos a forma funcional para ter acesso ao valor mais recente do estado.
+      setDisplayedText((prev) => {
+        // Se o texto exibido já estiver completo...
+        if (prev.length === text.length) {
+          // ...paramos o intervalo e encerramos.
+          clearInterval(intervalId);
+          // Chama a função onComplete, se ela existir.
+          if (onComplete) {
+            onComplete();
+          }
+          return prev;
+        }
+
+        // Caso contrário, adicionamos o próximo caractere.
+        const nextChar = text.charAt(prev.length);
+        return prev + nextChar;
+      });
     }, speed);
 
-    return () => clearInterval(interval);
-  }, [text, speed, onComplete]);
+    // Função de limpeza: essencial para parar o intervalo se o componente for removido da tela.
+    return () => {
+      clearInterval(intervalId);
+    };
+  }, [text, speed, onComplete]); // O efeito depende dessas props
 
-  return <h1 className="typing-text">{displayedText}</h1>;
-};
-
-export default TypingText;
+  return <span className={className}>{displayedText}</span>;
+}
