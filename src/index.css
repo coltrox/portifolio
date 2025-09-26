@@ -17,4 +17,14 @@ body {
 
   /* Garante que o fundo cubra a tela toda */
   min-height: 100vh;
+
+  /* ADICIONADO: Impede que o usuário selecione o texto da página */
+  user-select: none;
+  -webkit-user-select: none; /* Para compatibilidade com Safari */
+  -moz-user-select: none; /* Para compatibilidade com Firefox */
+}
+
+/* ADICIONADO: Remove a borda/outline que aparece em elementos clicados/focados */
+*:focus {
+  outline: none;
 }

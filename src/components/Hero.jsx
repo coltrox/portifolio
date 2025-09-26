@@ -1,63 +1,83 @@
-// Hero.jsx
-
-import { useState, useCallback } from "react";
-import { Link } from "react-router-dom";
-import TypingText from "./TypingText";
+import React, { useState, useCallback } from 'react';
+import { Link } from 'react-router-dom';
+import { useLanguage } from '../context/LanguageContext';
+import { translations } from '../translations';
+import TypingText from './TypingText';
+import LanguageSwitcher from './LanguageSwitcher';
 import styles from './Hero.module.css';
 
 export default function Hero() {
-  // Novo estado para controlar a aparição do nome
+  const { language } = useLanguage();
+  const t = translations[language];
+
+  // A animação agora começa sempre como 'false' ao carregar a página.
+  const [animationComplete, setAnimationComplete] = useState(false);
+
+  // Estados para controlar a sequência APENAS se a animação estiver em andamento.
   const [showName, setShowName] = useState(false);
   const [showSubtitle, setShowSubtitle] = useState(false);
-
-  // A função onComplete do nome agora vai mostrar o subtítulo
-  const handleNameComplete = useCallback(() => {
-    setShowSubtitle(true);
+  
+  // Callbacks para cada etapa da animação.
+  const handleGreetingComplete = useCallback(() => setShowName(true), []);
+  const handleNameComplete = useCallback(() => setShowSubtitle(true), []);
+  const handleSubtitleComplete = useCallback(() => {
+    // No final, apenas marca a animação como concluída para esta visualização.
+    setAnimationComplete(true);
   }, []);
 
   return (
     <section className={styles.heroSection}>
+      <LanguageSwitcher />
       
       <div className={styles.mainContent}>
-        {/* O h1 agora é um container para os dois textos */}
         <h1 className={styles.titleContainer}>
-          {/* Parte 1: "Olá, eu sou" */}
           <span className={styles.titleIntro}>
-            <TypingText
-              text="Olá, eu sou"
-              speed={70}
-              onComplete={() => setShowName(true)} // Ao terminar, ativa o showName
-            />
-          </span>
-
-          {/* Parte 2: "Pedro Coltro", só aparece depois que o primeiro termina */}
-          {showName && (
-            <span className={styles.titleName}>
+            {/* Se a animação já terminou, mostra o texto estático. */}
+            {animationComplete ? t.hero_intro : (
               <TypingText
-                text="Pedro Coltro"
-                speed={120} // Um pouco mais lento para dar mais impacto
-                onComplete={handleNameComplete} // Ao terminar, mostra o subtítulo
+                text={t.hero_intro}
+                speed={70}
+                onComplete={handleGreetingComplete}
               />
+            )}
+          </span>
+          
+          {/* O nome aparece estático ou animado, dependendo do estado. */}
+          {(showName || animationComplete) && (
+            <span className={styles.titleName}>
+              {animationComplete ? t.hero_name : (
+                <TypingText
+                  text={t.hero_name}
+                  speed={120}
+                  onComplete={handleNameComplete}
+                />
+              )}
             </span>
           )}
         </h1>
 
-        {/* O subtítulo só aparece depois que o nome termina de ser digitado */}
-        {showSubtitle && (
+        {/* O subtítulo aparece estático ou animado. */}
+        {(showSubtitle || animationComplete) && (
           <p>
-            <TypingText text="Desenvolvedor full stack web/mobile" speed={40} />
+            {animationComplete ? t.hero_subtitle : (
+              <TypingText
+                text={t.hero_subtitle}
+                speed={40}
+                onComplete={handleSubtitleComplete}
+              />
+            )}
           </p>
         )}
       </div>
 
-      {/* Os links só aparecem junto com o subtítulo */}
-      {showSubtitle && (
+      {/* Os links aparecem se a animação tiver terminado. */}
+      {animationComplete && (
         <div className={styles.linksContainer}>
           <Link to="/projetos" className={styles.navLink}>
-            Meus Projetos
+            {t.hero_button_projects}
           </Link>
           <Link to="/sobre" className={styles.navLink}>
-            Mais Sobre Mim
+            {t.hero_button_about}
           </Link>
         </div>
       )}

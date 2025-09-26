@@ -1,24 +1,21 @@
-// App.js (ou seu arquivo principal de rotas)
-
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Hero from "./components/Hero"; // Página inicial
-import Projetos from "./pages/Projetos"; // Página de projetos
-import Sobre from "./pages/Sobre"; // Página Sobre
+import { LanguageProvider } from "./context/LanguageContext"; // Importe o Provider
+import Hero from "./components/Hero";
+import Projetos from "./pages/Projetos";
+import Sobre from "./pages/Sobre";
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        {/* Rota para a página inicial */}
-        <Route path="/" element={<Hero />} />
-
-        {/* Rota para a página de projetos */}
-        <Route path="/projetos" element={<Projetos />} />
-
-        {/* Rota para a página sobre mim */}
-        <Route path="/sobre" element={<Sobre />} />
-      </Routes>
-    </BrowserRouter>
+    // Envolva tudo com o LanguageProvider
+    <LanguageProvider>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Hero />} />
+          <Route path="/projetos" element={<Projetos />} />
+          <Route path="/sobre" element={<Sobre />} />
+        </Routes>
+      </BrowserRouter>
+    </LanguageProvider>
   );
 }
 

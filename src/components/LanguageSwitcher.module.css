@@ -1,0 +1,61 @@
+/* src/components/LanguageSwitcher.module.css */
+
+.switcherContainer {
+  position: absolute;
+  top: 2rem;
+  right: 2rem;
+  z-index: 10;
+}
+
+.switch {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  /* AJUSTADO: Tamanho geral reduzido para ser mais sutil */
+  width: 72px;
+  height: 36px;
+  background-color: #ffffff;
+  /* AJUSTADO: Raio proporcional ao novo tamanho */
+  border-radius: 18px;
+  border: none;
+  cursor: pointer;
+  padding: 0 6px; /* Padding interno ajustado */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.2s ease;
+}
+
+.switch:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
+}
+
+.flag {
+  /* AJUSTADO: Tamanho das bandeiras reduzido */
+  font-size: 1.4rem;
+  z-index: 1;
+  transition: transform 0.2s ease;
+}
+
+.switch:hover .flag {
+  transform: scale(1.05);
+}
+
+.handle {
+  position: absolute;
+  /* AJUSTADO: Posição e tamanho do anel */
+  top: 4px;
+  left: 4px;
+  width: 28px;
+  height: 28px;
+  background-color: transparent;
+  /* AJUSTADO: Borda mais fina para um look mais leve */
+  border: 2.5px solid #8b5cf6;
+  border-radius: 50%;
+  transition: transform 0.4s cubic-bezier(0.68, -0.55, 0.27, 1.55);
+  z-index: 0;
+}
+
+/* AJUSTADO: Distância do deslize recalculada para o novo tamanho */
+.switch.enActive .handle {
+  transform: translateX(32px);
+}
