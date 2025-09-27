@@ -13,7 +13,7 @@ export default function LanguageSwitcher() {
         aria-label="Change language"
       >
         <div className={styles.flag}>🇧🇷</div>
-        <div className={styles.flag}>🇺🇸</div>
+        <div className={styles.flag}>𝖾𝗇</div>
         <div className={styles.handle}></div>
       </button>
     </div>

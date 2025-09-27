@@ -1,14 +1,14 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { LanguageProvider } from "./context/LanguageContext"; // Importe o Provider
+import { LanguageProvider } from "./context/LanguageContext";
 import Hero from "./components/Hero";
 import Projetos from "./pages/Projetos";
 import Sobre from "./pages/Sobre";
 
 function App() {
   return (
-    // Envolva tudo com o LanguageProvider
     <LanguageProvider>
-      <BrowserRouter>
+      {/* AQUI ESTÁ A CORREÇÃO: Adicione a propriedade basename */}
+      <BrowserRouter basename="/portfolio/">
         <Routes>
           <Route path="/" element={<Hero />} />
           <Route path="/projetos" element={<Projetos />} />

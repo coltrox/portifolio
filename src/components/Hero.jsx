@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useLanguage } from '../context/LanguageContext';
 import { translations } from '../translations';
@@ -10,20 +10,24 @@ export default function Hero() {
   const { language } = useLanguage();
   const t = translations[language];
 
-  // A animação agora começa sempre como 'false' ao carregar a página.
-  const [animationComplete, setAnimationComplete] = useState(false);
+  const [greetingDone, setGreetingDone] = useState(false);
+  const [nameDone, setNameDone] = useState(false);
+  const [subtitleDone, setSubtitleDone] = useState(false);
 
-  // Estados para controlar a sequência APENAS se a animação estiver em andamento.
-  const [showName, setShowName] = useState(false);
-  const [showSubtitle, setShowSubtitle] = useState(false);
-  
-  // Callbacks para cada etapa da animação.
-  const handleGreetingComplete = useCallback(() => setShowName(true), []);
-  const handleNameComplete = useCallback(() => setShowSubtitle(true), []);
-  const handleSubtitleComplete = useCallback(() => {
-    // No final, apenas marca a animação como concluída para esta visualização.
-    setAnimationComplete(true);
-  }, []);
+  useEffect(() => {
+    setGreetingDone(false);
+    setNameDone(false);
+    setSubtitleDone(false);
+  }, [language]);
+
+
+  const handleGreetingComplete = useCallback(() => setGreetingDone(true), []);
+  const handleNameComplete = useCallback(() => setNameDone(true), []);
+  const handleSubtitleComplete = useCallback(() => setSubtitleDone(true), []);
+
+  if (!t) {
+    return null; 
+  }
 
   return (
     <section className={styles.heroSection}>
@@ -32,46 +36,42 @@ export default function Hero() {
       <div className={styles.mainContent}>
         <h1 className={styles.titleContainer}>
           <span className={styles.titleIntro}>
-            {/* Se a animação já terminou, mostra o texto estático. */}
-            {animationComplete ? t.hero_intro : (
-              <TypingText
-                text={t.hero_intro}
-                speed={70}
-                onComplete={handleGreetingComplete}
-              />
-            )}
+            <TypingText
+              key={`greeting-${language}`} 
+              text={t.hero_intro}
+              speed={70}
+              onComplete={handleGreetingComplete}
+            />
           </span>
           
-          {/* O nome aparece estático ou animado, dependendo do estado. */}
-          {(showName || animationComplete) && (
+          {}
+          {greetingDone && (
             <span className={styles.titleName}>
-              {animationComplete ? t.hero_name : (
-                <TypingText
-                  text={t.hero_name}
-                  speed={120}
-                  onComplete={handleNameComplete}
-                />
-              )}
+              <TypingText
+                key={`name-${language}`}
+                text={t.hero_name}
+                speed={120}
+                onComplete={handleNameComplete}
+              />
             </span>
           )}
         </h1>
 
-        {/* O subtítulo aparece estático ou animado. */}
-        {(showSubtitle || animationComplete) && (
+        {}
+        {nameDone && (
           <p>
-            {animationComplete ? t.hero_subtitle : (
-              <TypingText
-                text={t.hero_subtitle}
-                speed={40}
-                onComplete={handleSubtitleComplete}
-              />
-            )}
+            <TypingText
+              key={`subtitle-${language}`}
+              text={t.hero_subtitle}
+              speed={40}
+              onComplete={handleSubtitleComplete}
+            />
           </p>
         )}
       </div>
 
-      {/* Os links aparecem se a animação tiver terminado. */}
-      {animationComplete && (
+      {}
+      {subtitleDone && (
         <div className={styles.linksContainer}>
           <Link to="/projetos" className={styles.navLink}>
             {t.hero_button_projects}
